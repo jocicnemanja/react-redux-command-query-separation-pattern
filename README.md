@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# This is React project with Airbnb linting rules and Storybook 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

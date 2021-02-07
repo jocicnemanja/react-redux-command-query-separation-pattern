@@ -1,47 +1,79 @@
-import React from 'react';
-
-import { Button } from '../Button/Button';
-import './header.css';
+import React, { useEffect, useState } from "react";
+import "./header.css";
 
 export interface HeaderProps {
-  user?: {};
-  onLogin: () => void;
-  onLogout: () => void;
-  onCreateAccount: () => void;
+  title: string;
+  children: any;
+  logoSVG: any;
 }
 
-export const Header: React.FC<HeaderProps> = ({ user, onLogin, onLogout, onCreateAccount }) => (
-  <header>
-    <div className="wrapper">
-      <div>
-        <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-          <g fill="none" fillRule="evenodd">
-            <path
-              d="M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z"
-              fill="#FFF"
-            />
-            <path
-              d="M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z"
-              fill="#555AB9"
-            />
-            <path
-              d="M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z"
-              fill="#91BAF8"
-            />
-          </g>
-        </svg>
-        <h1>Acme</h1>
+export const Header: React.FC<HeaderProps> = ({ title, logoSVG, children }) => {
+  const [sideNav, setSideNav] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setSideNav(document.getElementById("basic-mobile-side-bar"));
+    return () => {
+      setSideNav(null);
+    };
+  }, []);
+
+  const openMobileMenu = () => {
+    if (sideNav) {
+      sideNav.style.width = "100%";
+    }
+  };
+  const closeMobileMenu = () => {
+    if (sideNav) {
+      sideNav.style.width = "0";
+    }
+  };
+  const closeIconSVG = () => (
+    <svg
+      onClick={closeMobileMenu}
+      width="24"
+      height="24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z" />
+    </svg>
+  );
+
+  const menuIconSVG = () => (
+    <svg
+      onClick={openMobileMenu}
+      width="24"
+      height="24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M24 18v1h-24v-1h24zm0-6v1h-24v-1h24zm0-6v1h-24v-1h24z"
+        fill="#1040e2"
+      />
+      <path d="M24 19h-24v-1h24v1zm0-6h-24v-1h24v1zm0-6h-24v-1h24v1z" />
+    </svg>
+  );
+
+  return (
+    <>
+      <header>
+        <div className="wrapper">
+          <div>
+            {logoSVG}
+            <h1>{title}</h1>
+          </div>
+          <div className="menu-icon">{menuIconSVG()}</div>
+          <div className="header-children">{children}</div>
+        </div>
+      </header>
+      <div id="basic-mobile-side-bar" className="side-nav">
+        <header>
+          <div className="wrapper">
+            <div />
+            {closeIconSVG()}
+          </div>
+        </header>
+        <div className="side-nav-children">{children}</div>
       </div>
-      <div>
-        {user ? (
-          <Button size="small" onClick={onLogout} label="Log out" />
-        ) : (
-          <>
-            <Button size="small" onClick={onLogin} label="Log in" />
-            <Button primary size="small" onClick={onCreateAccount} label="Sign up" />
-          </>
-        )}
-      </div>
-    </div>
-  </header>
-);
+    </>
+  );
+};
