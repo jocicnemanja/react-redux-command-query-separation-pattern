@@ -1,4 +1,4 @@
-# This is React project with Airbnb linting rules and Storybook 
+# This is React-Redux project using Redux Middlewares to implement Command Query Separation pattern for main architecture 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

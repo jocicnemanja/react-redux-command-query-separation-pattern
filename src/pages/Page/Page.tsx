@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Header } from "../../components/Header/Header";
 import "./page.css";
+import store from "../../state/store";
+import { getBooks } from "../../state/books/actions";
 
 const Page: React.FC = () => {
+  useEffect(() => {
+    console.log("INIT");
+    store.dispatch(getBooks());
+    store.subscribe(() => {
+      console.log("STORE", store.getState());
+    });
+    return () => {};
+  }, []);
+
   const createLogoSVG = () => (
     <svg
       width="32"
