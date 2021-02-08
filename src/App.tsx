@@ -8,6 +8,7 @@ function App() {
   const [loader, setLoader] = useState<Boolean>(false);
   useEffect(() => {
     store.subscribe(() => {
+      console.log('LOADER CHANGE', loader)
       setLoader(store.getState().ui.pending);
     });
   });

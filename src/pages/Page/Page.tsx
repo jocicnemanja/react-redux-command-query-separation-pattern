@@ -8,6 +8,7 @@ import { store } from "../../state/store";
 
 const Page: React.FC = () => {
   const [books, setBooks] = useState<Book[] | []>([]);
+
   useEffect(() => {
     store.dispatch(getBooks());
     store.subscribe(() => {
@@ -53,12 +54,7 @@ const Page: React.FC = () => {
   return (
     <article>
       <Header logoSVG={createLogoSVG()} title="Rrepo">
-        <div className="example-links">
-          <a href="www.google.com">About</a>
-          <a href="www.google.com">Services</a>
-          <a href="www.google.com">Clients</a>
-          <a href="www.google.com">Contact</a>
-        </div>
+        <div className="example-links" />
       </Header>
 
       <section>
