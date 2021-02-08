@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Page from "./pages/Page/Page";
-import store from "./state/store";
+import { store } from "./state/store";
 
 function App() {
   const [loader, setLoader] = useState<Boolean>(false);
   useEffect(() => {
     store.subscribe(() => {
-      console.log('SPINER STATE', store.getState().ui.pending)
       setLoader(store.getState().ui.pending);
     });
   });

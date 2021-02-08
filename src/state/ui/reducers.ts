@@ -12,14 +12,11 @@ const initUi = {
 };
 
 function uiReducer(state = initUi, action: UiAction) {
-  console.log('HIDE SPINE REDUCER', action)
   switch (action.type) {
     case SHOW_SPINNER:
-      console.log('show SPINE REDUCER222')
       return { ...state, pending: true };
 
     case HIDE_SPINNER:
-      console.log('HIDE SPINE REDUCER222')
       return { ...state, pending: false };
 
     case ORDER_IN_PROGRESS:

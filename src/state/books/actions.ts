@@ -1,10 +1,10 @@
-import { GET_BOOKS, SELECT_BOOK, UPDATE_BOOKS } from "./types";
+import { Book, GET_BOOKS, SELECT_BOOK, UPDATE_BOOKS } from "./types";
 
 export const getBooks = () => ({
   type: GET_BOOKS,
 });
 
-export const updateBooks = (data: string) => ({
+export const updateBooks = (data: Book[]) => ({
   type: UPDATE_BOOKS,
   payload: data,
 });

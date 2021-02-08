@@ -1,6 +1,8 @@
 import { Middleware } from "redux";
 import { RootState } from "../reducers";
 import {
+  Book,
+  BookDTO,
   FETCH_BOOKS_ERROR,
   FETCH_BOOKS_SUCCESS,
   GET_BOOKS,
@@ -36,7 +38,18 @@ const processBooksCollection: Middleware<{}, RootState> = ({ dispatch }) => (
 ) => (action) => {
   next(action);
   if (action.type === FETCH_BOOKS_SUCCESS) {
-    dispatch(updateBooks(action.payload.items));
+    dispatch(
+      updateBooks(
+        action.payload.items.map(
+          (bookDto: BookDTO): Book => ({
+            id: bookDto?.id,
+            title: bookDto.volumeInfo?.title,
+            description: bookDto.volumeInfo?.subtitle,
+            thumbnail: bookDto.volumeInfo?.imageLinks?.thumbnail,
+          })
+        )
+      )
+    );
     dispatch(hideSpinner());
   }
 };

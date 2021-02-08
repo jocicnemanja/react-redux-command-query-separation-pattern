@@ -1,15 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Header } from "../../components/Header/Header";
 import "./page.css";
-import store from "../../state/store";
 import { getBooks } from "../../state/books/actions";
+import BookCard from "../../components/BookCard/BookCard";
+import { Book } from "../../state/books/types";
+import { store } from "../../state/store";
 
 const Page: React.FC = () => {
+  const [books, setBooks] = useState<Book[] | []>([]);
   useEffect(() => {
-    console.log("INIT");
     store.dispatch(getBooks());
     store.subscribe(() => {
-      console.log("STORE", store.getState());
+      setBooks(store.getState().books);
     });
     return () => {};
   }, []);
@@ -37,6 +39,16 @@ const Page: React.FC = () => {
       </g>
     </svg>
   );
+  // @ts-ignore
+  const bookList = books.map(({ id, thumbnail, title, description }) => (
+    <BookCard
+      key={id}
+      id={id}
+      title={title}
+      description={description}
+      thumbnail={thumbnail}
+    />
+  ));
 
   return (
     <article>
@@ -50,14 +62,8 @@ const Page: React.FC = () => {
       </Header>
 
       <section>
-        <h2>Simple page</h2>
-        <p>
-          Just simple page that contains Header component for demo purpose and
-          feel how to use it!
-        </p>
-        <p>
-          Header component accepts children, as example we passed some links.
-        </p>
+        <h2>Books app</h2>
+        {bookList}
       </section>
     </article>
   );

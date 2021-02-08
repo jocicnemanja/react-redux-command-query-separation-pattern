@@ -5,15 +5,26 @@ export const UPDATE_BOOKS = "[books] Update";
 export const SELECT_BOOK = "[books] Select";
 
 export interface Book {
-  id: number;
+  id: string;
+  thumbnail: string;
   title: string;
-  imgUrl: string;
   description: string;
+}
+
+export interface BookDTO {
+  id: string;
+  volumeInfo: {
+    title: string;
+    subtitle: string;
+    imageLinks: {
+      thumbnail: string;
+    };
+  };
 }
 
 interface UpdateBookAction {
   type: string;
-  payload: string;
+  payload: {};
 }
 
 export type BookActionTypes = UpdateBookAction;
