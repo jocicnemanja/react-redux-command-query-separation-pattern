@@ -1,8 +1,12 @@
 import { applyMiddleware, createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 import { reducers } from "./reducers";
-import api from "./api/middlewares";
-import { getBooksFlow } from "./books/middlewares";
+import apiMiddlewares from "./api/middlewares";
+import booksMiddlewares from "./books/middlewares";
 
-const store = createStore(reducers, applyMiddleware(getBooksFlow, api));
+export const store = createStore(
+  reducers,
+  composeWithDevTools(applyMiddleware(...booksMiddlewares, ...apiMiddlewares))
+);
 
 export default store;

@@ -7,14 +7,12 @@ const api: Middleware<{}, RootState> = ({ dispatch }) => (next) => (action) => {
     const { method, url, onSuccess, onError } = action.meta;
 
     fetch(url, { method })
-      .then((response) => {
-        console.log("RESPONSE", response);
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => dispatch({ type: onSuccess, payload: data }))
       .catch((error) => dispatch({ type: onError, payload: error }));
   }
   return next(action);
 };
 
-export default api;
+const apiMiddlewares = [api];
+export default apiMiddlewares;
