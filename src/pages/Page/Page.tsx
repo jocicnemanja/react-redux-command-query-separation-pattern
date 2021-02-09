@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Header } from "../../components/Header/Header";
 import "./page.css";
 import { getBooks } from "../../state/books/actions";
 import BookCard from "../../components/BookCard/BookCard";
 import { Book } from "../../state/books/types";
-import { store } from "../../state/store";
+import { booksSelector } from "../../state/books/selectors";
 
 const Page: React.FC = () => {
-  const [books, setBooks] = useState<Book[] | []>([]);
-
+  const books = useSelector(booksSelector);
+  const dispatch = useDispatch();
   useEffect(() => {
-    store.dispatch(getBooks());
-    store.subscribe(() => {
-      setBooks(store.getState().books);
-    });
+    dispatch(getBooks());
     return () => {};
   }, []);
 
@@ -40,10 +38,8 @@ const Page: React.FC = () => {
       </g>
     </svg>
   );
-  // @ts-ignore
-  const bookList = books.map(({ id, thumbnail, title, description }) => (
+  const bookList = books.map(({ id, thumbnail, title, description }: Book) => (
     <BookCard
-      key={id}
       id={id}
       title={title}
       description={description}
@@ -54,7 +50,12 @@ const Page: React.FC = () => {
   return (
     <article>
       <Header logoSVG={createLogoSVG()} title="Rrepo">
-        <div className="example-links" />
+        <div className="example-links">
+          <a href="www.google.com">About</a>
+          <a href="www.google.com">Services</a>
+          <a href="www.google.com">Clients</a>
+          <a href="www.google.com">Contact</a>
+        </div>
       </Header>
 
       <section>
