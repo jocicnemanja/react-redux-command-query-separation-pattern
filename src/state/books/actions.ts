@@ -1,7 +1,8 @@
 import { Book, GET_BOOKS, SELECT_BOOK, UPDATE_BOOKS } from "./types";
 
-export const getBooks = () => ({
+export const getBooks = (data: string = "react") => ({
   type: GET_BOOKS,
+  payload: data,
 });
 
 export const updateBooks = (data: Book[]) => ({

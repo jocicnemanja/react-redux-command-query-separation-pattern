@@ -6,6 +6,7 @@ import { getBooks } from "../../state/books/actions";
 import BookCard from "../../components/BookCard/BookCard";
 import { Book } from "../../state/books/types";
 import { booksSelector } from "../../state/books/selectors";
+import Search from "../../components/Search/search";
 
 const Page: React.FC = () => {
   const books = useSelector(booksSelector);
@@ -40,6 +41,7 @@ const Page: React.FC = () => {
   );
   const bookList = books.map(({ id, thumbnail, title, description }: Book) => (
     <BookCard
+      key={id}
       id={id}
       title={title}
       description={description}
@@ -47,20 +49,24 @@ const Page: React.FC = () => {
     />
   ));
 
+  const search = (searchTerm: string) => {
+    console.log('rrrrrrrrrrrrrr', searchTerm)
+    dispatch(getBooks(searchTerm));
+  };
+
   return (
     <article>
       <Header logoSVG={createLogoSVG()} title="Rrepo">
-        <div className="example-links">
-          <a href="www.google.com">About</a>
-          <a href="www.google.com">Services</a>
-          <a href="www.google.com">Clients</a>
-          <a href="www.google.com">Contact</a>
-        </div>
+        <div className="example-links" />
       </Header>
-
       <section>
         <h2>Books app</h2>
-        {bookList}
+        <Search
+          onSearch={(searchTerm: string) => {
+            search(searchTerm);
+          }}
+        />
+        <div className="books">{bookList}</div>
       </section>
     </article>
   );

@@ -13,17 +13,18 @@ import apiRequest from "../api/actions";
 import { createOrder } from "../orders/actions";
 import { updateBooks } from "./actions";
 
-const URL = "https://www.googleapis.com/books/v1/volumes?q=react";
+const URL = "https://www.googleapis.com/books/v1/volumes";
 
 const getBooksFlow: Middleware<{}, RootState> = ({ dispatch }) => (next) => (
   action
 ) => {
   next(action);
   if (action.type === GET_BOOKS) {
+      console.log('action->>>>>>>>>', action)
     dispatch(
       apiRequest({
         method: "GET",
-        url: URL,
+        url: `${URL}?q=${action.payload}`,
         body: {},
         onSuccess: FETCH_BOOKS_SUCCESS,
         onError: FETCH_BOOKS_ERROR,
@@ -54,7 +55,7 @@ const processBooksCollection: Middleware<{}, RootState> = ({ dispatch }) => (
   }
 };
 
-const selectBookFlow: Middleware<{}, RootState> = ({ dispatch }) => (next) => (
+const selectBook: Middleware<{}, RootState> = ({ dispatch }) => (next) => (
   action
 ) => {
   next(action);
@@ -68,7 +69,7 @@ const selectBookFlow: Middleware<{}, RootState> = ({ dispatch }) => (next) => (
 const booksMiddlewares: Middleware<{}, RootState>[] = [
   getBooksFlow,
   processBooksCollection,
-  selectBookFlow,
+  selectBook,
 ];
 
 export default booksMiddlewares;
