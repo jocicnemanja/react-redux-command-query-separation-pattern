@@ -50,7 +50,6 @@ const Page: React.FC = () => {
   ));
 
   const search = (searchTerm: string) => {
-    console.log('rrrrrrrrrrrrrr', searchTerm)
     dispatch(getBooks(searchTerm));
   };
 

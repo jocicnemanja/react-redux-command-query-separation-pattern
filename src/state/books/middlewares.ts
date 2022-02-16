@@ -20,7 +20,6 @@ const getBooksFlow: Middleware<{}, RootState> = ({ dispatch }) => (next) => (
 ) => {
   next(action);
   if (action.type === GET_BOOKS) {
-      console.log('action->>>>>>>>>', action)
     dispatch(
       apiRequest({
         method: "GET",
